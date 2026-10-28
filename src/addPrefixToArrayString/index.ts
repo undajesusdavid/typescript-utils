@@ -1,4 +1,7 @@
-type PrefixedStringArray<T extends string, A extends string, S extends string> = `${T}${S}${A}`[]; 
+type PrefixedStringArray<T extends string, A extends readonly string[], S extends string> = {
+    [K in keyof A]: `${T}${S}${A[K]}`;
+};
+
 
 /**
  * Toma un prefijo, un arreglo de palabras y un separador, y retorna un nuevo arreglo 
@@ -18,10 +21,11 @@ type PrefixedStringArray<T extends string, A extends string, S extends string> =
  * // Retorna: ['users/register', 'users/details']
  * const rutas = addPrefix("users", ["register", "details"], "/");
 */
-const addPrefix = <T extends string, A extends string, S extends string>(
+const addPrefix = <T extends string, const A extends readonly string[], S extends string = "/">(
     prefix: T,
-    words: A[],
+    words: A,
     separator: S = "/" as S
 ): PrefixedStringArray<T, A, S> => {
-    return words.map((w) => `${prefix}${separator}${w}` as `${T}${S}${A}`);
-}
+    return words.map((w) => `${prefix}${separator}${w}`) as unknown as PrefixedStringArray<T, A, S>;
+};
+
