@@ -23,5 +23,5 @@ const addPrefix = <T extends string, A extends string, S extends string>(
     words: A[],
     separator: S = "/" as S
 ): PrefixedStringArray<T, A, S> => {
-    return words.map((w): `${T}${S}${A}` => `${prefix}${separator}${w}`);
+    return words.map((w) => `${prefix}${separator}${w}` as `${T}${S}${A}`);
 }
