@@ -1,7 +1,6 @@
-type PrefixedStringArray<T extends string, A extends readonly string[], S extends string> = {
-    [K in keyof A]: `${T}${S}${A[K]}`;
+type PrefixedStringArray<T extends string, A extends readonly string[], S extends string = "/"> = {
+    [K in keyof A]: K extends `${number}` ? `${T}${S}${A[K]}` : A[K];
 };
-
 
 /**
  * Toma un prefijo, un arreglo de palabras y un separador, y retorna un nuevo arreglo 
